@@ -56,18 +56,18 @@ namespace ClassicUO.Game.UI.Gumps
 
             int[][] textTable =
             {
-                new[] { 0, (int)Buttons.Map },
+                //new[] { 0, (int)Buttons.Map },
                 new[] { 1, (int)Buttons.Paperdoll },
                 new[] { 1, (int)Buttons.Inventory },
                 new[] { 1, (int)Buttons.Journal },
-                new[] { 0, (int)Buttons.Chat },
+                //new[] { 0, (int)Buttons.Chat },
                 new[] { 0, (int)Buttons.Help },
                 new[] { 1, (int)Buttons.WorldMap },
                 new[] { 0, (int)Buttons.Info },
                 new[] { 0, (int)Buttons.Debug },
                 new[] { 1, (int)Buttons.NetStats },
-                new[] { 1, (int)Buttons.UOStore },
-                new[] { 1, (int)Buttons.GlobalChat }
+                //new[] { 1, (int)Buttons.UOStore },
+                //new[] { 1, (int)Buttons.GlobalChat }
             };
 
             var cliloc = Client.Game.UO.FileManager.Clilocs;

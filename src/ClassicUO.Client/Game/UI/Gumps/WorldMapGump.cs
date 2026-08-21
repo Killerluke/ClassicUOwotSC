@@ -489,8 +489,8 @@ namespace ClassicUO.Game.UI.Gumps
             ContextMenuItemEntry namesHpBarEntry = new ContextMenuItemEntry(ResGumps.NamesHealthbars);
             namesHpBarEntry.Add(_options["show_your_name"]);
             namesHpBarEntry.Add(_options["show_your_healthbar"]);
-            namesHpBarEntry.Add(_options["show_party_name"]);
-            namesHpBarEntry.Add(_options["show_party_healthbar"]);
+            //namesHpBarEntry.Add(_options["show_party_name"]);
+            //namesHpBarEntry.Add(_options["show_party_healthbar"]);
 
             ContextMenu.Add(namesHpBarEntry);
 
@@ -508,7 +508,7 @@ namespace ClassicUO.Game.UI.Gumps
             ContextMenu.Add(freeView);
 
             ContextMenu.Add("", null);
-            ContextMenu.Add(_options["show_party_members"]);
+            //ContextMenu.Add(_options["show_party_members"]);
             ContextMenu.Add(_options["show_mobiles"]);
             ContextMenu.Add(_options["show_multis"]);
             ContextMenu.Add(_options["show_coordinates"]);
