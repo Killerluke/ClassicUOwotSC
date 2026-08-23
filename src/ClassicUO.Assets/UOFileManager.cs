@@ -53,6 +53,7 @@ namespace ClassicUO.Assets
         public ClientVersion Version { get; }
         public string BasePath { get; }
         public bool IsUOPInstallation { get; private set; }
+        public bool UseLegacyAnimations { get; set; }
 
         public AnimationsLoader Animations { get; }
         public AnimDataLoader AnimData { get; }
@@ -143,6 +144,7 @@ namespace ClassicUO.Assets
             Stopwatch stopwatch = Stopwatch.StartNew();
             
             Maps.MapsLayouts = mapsLayouts;
+            Animations.UseLegacyUopAnimationReader = UseLegacyAnimations;
 
             Animations.Load();
             AnimData.Load();
