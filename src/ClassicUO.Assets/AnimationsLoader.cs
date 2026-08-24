@@ -43,8 +43,6 @@ namespace ClassicUO.Assets
 
         public IReadOnlyDictionary<ushort, Dictionary<ushort, EquipConvData>> EquipConversions => _equipConv;
 
-        public bool UseLegacyUopAnimationReader { get; set; }
-
         public List<(ushort, byte)>[] GroupReplaces { get; } =
             new List<(ushort, byte)>[2]
             {
@@ -1240,73 +1238,6 @@ namespace ClassicUO.Assets
             int fc = reader.ReadInt32LE();
             uint dataStart = reader.ReadUInt32LE();
             reader.Seek(dataStart);
-
-            if (UseLegacyUopAnimationReader)
-            {
-                byte frameCount = (byte)(
-                    type < AnimationGroupsType.Equipment
-                        ? Math.Round(fc / (float)MAX_DIRECTIONS)
-                        : MAX_DIRECTIONS * 2
-                );
-
-                if (frameCount > _frames.Length)
-                {
-                    _frames = new FrameInfo[frameCount];
-                }
-
-                var frames = _frames.AsSpan(0, frameCount);
-
-                for (ushort currentDirection = 0; currentDirection <= direction; currentDirection++)
-                {
-                    for (ushort frameNumber = 0; frameNumber < frameCount; frameNumber++)
-                    {
-                        long start = reader.Position;
-                        ref readonly var animationHeader = ref Unsafe.AsRef<UOPAnimationHeader>(
-                            reader.PositionAddress.ToPointer()
-                        );
-
-                        ushort headerFrameNumber = (ushort)((animationHeader.FrameID - 1) % frameCount);
-                        ref var frame = ref frames[frameNumber];
-
-                        frame.Num = frameNumber;
-                        frame.CenterX = 0;
-                        frame.CenterY = 0;
-                        frame.Width = 0;
-                        frame.Height = 0;
-
-                        if (frameNumber < headerFrameNumber)
-                        {
-                            continue;
-                        }
-
-                        if (frameNumber > headerFrameNumber)
-                        {
-                            break;
-                        }
-
-                        if (currentDirection == direction)
-                        {
-                            if (start + animationHeader.DataOffset >= reader.Length)
-                            {
-                                continue;
-                            }
-
-                            reader.Skip((int)animationHeader.DataOffset);
-
-                            var palette = MemoryMarshal.Cast<byte, ushort>(
-                                reader.Buffer.Slice(reader.Position, 512)
-                            );
-                            reader.Skip(512);
-
-                            ReadSpriteData(ref reader, palette, ref frame, true);
-                        }
-
-                        reader.Seek(start + sizeof(UOPAnimationHeader));
-                    }
-                }
-
-                return frames;
-            }
 
             UOPFrameData[] sharedBuffer = ArrayPool<UOPFrameData>.Shared.Rent(fc);
             try
